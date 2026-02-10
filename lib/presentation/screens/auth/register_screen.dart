@@ -17,6 +17,9 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
+
   TextEditingController UserNameController = TextEditingController();
   TextEditingController EmailController = TextEditingController();
   TextEditingController PhoneNumberController = TextEditingController();
@@ -86,6 +89,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     CustomTextFormField(
                       hintText: "User Name",
                       controller: UserNameController,
+                      keyboardType: TextInputType.text,
                       prefixIcon: const Icon(Icons.person),
                       validator: (value) {
                         return AppValidator.validateUserName(value);
@@ -96,6 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     CustomTextFormField(
                       hintText: "Email",
                       controller: EmailController,
+                      keyboardType: TextInputType.emailAddress,
                       prefixIcon: const Icon(Icons.email),
                       validator: (value) {
                         return AppValidator.validateEmail(value);
@@ -107,18 +112,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     CustomTextFormField(
                       hintText: "Phone Number",
                       controller: PhoneNumberController,
+                      keyboardType: TextInputType.phone,
                       prefixIcon: const Icon(Icons.phone_android),
                       validator: (value) {
                         return AppValidator.validatePhoneNumber(value);
                       },
                     ),
+
                     SizedBox(height: AppSize.height * 0.01),
 
                     CustomTextFormField(
                       hintText: "Password",
-                      obscureText: true,
+                      obscureText: _obscurePassword,
                       controller: PasswordController,
+                      keyboardType: TextInputType.text,
                       prefixIcon: const Icon(Icons.password),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscurePassword = !_obscurePassword;
+                          });
+                        },
+                      ),
                       validator: (value) {
                         return AppValidator.validatePassword(value);
                       },
@@ -128,15 +148,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     CustomTextFormField(
                       hintText: "Confirm Password",
-                      obscureText: true,
-                      controller: PasswordController,
+                      obscureText: _obscureConfirmPassword,
+                      controller: ConfrimPasswordController,
+                      keyboardType: TextInputType.text,
                       prefixIcon: const Icon(Icons.password),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscureConfirmPassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscureConfirmPassword = !_obscureConfirmPassword;
+                          });
+                        },
+                      ),
+
                       validator: (value) {
                         return AppValidator.validatePassword(value);
                       },
                     ),
 
                     SizedBox(height: AppSize.height * 0.04),
+
                     SizedBox(
                       height: AppSize.height * 0.06,
                       width: AppSize.width * 0.9,

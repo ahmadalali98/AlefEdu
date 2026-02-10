@@ -19,6 +19,8 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController EmailController = TextEditingController();
   TextEditingController PasswordController = TextEditingController();
 
+  bool _obscurePassword = true;
+
   @override
   Widget build(BuildContext context) {
     AppSize.setSize(context);
@@ -79,6 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     CustomTextFormField(
                       hintText: "Email",
                       controller: EmailController,
+                      keyboardType: TextInputType.emailAddress,
                       prefixIcon: const Icon(Icons.email),
                       validator: (value) {
                         return AppValidator.validateEmail(value);
@@ -88,9 +91,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: AppSize.height * 0.01),
                     CustomTextFormField(
                       hintText: "Password",
-                      obscureText: true,
+                      obscureText: _obscurePassword,
                       controller: PasswordController,
+                      keyboardType: TextInputType.text,
                       prefixIcon: const Icon(Icons.password),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscurePassword = !_obscurePassword;
+                          });
+                        },
+                      ),
                       validator: (value) {
                         return AppValidator.validatePassword(value);
                       },
