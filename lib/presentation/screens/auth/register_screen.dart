@@ -1,23 +1,27 @@
 import 'package:alefedu/constants/app_color.dart';
 import 'package:alefedu/constants/app_size.dart';
-import 'package:alefedu/presentation/Widget/text_form_feild.dart';
 import 'package:alefedu/presentation/validators/app_validators.dart';
 import 'package:alefedu/router/router_string.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+import '../../Widget/text_form_feild.dart' show CustomTextFormField;
+
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  TextEditingController UserNameController = TextEditingController();
   TextEditingController EmailController = TextEditingController();
+  TextEditingController PhoneNumberController = TextEditingController();
   TextEditingController PasswordController = TextEditingController();
+  TextEditingController ConfrimPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
           key: _formKey,
           child: SingleChildScrollView(
             child: SizedBox(
-              height: AppSize.height * 0.9,
+              height: AppSize.height * 0.8,
               // width: AppSize.width * 0.9,
               child: Padding(
                 padding: const EdgeInsets.all(16),
@@ -37,8 +41,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // SizedBox(height: 14),
                     Lottie.asset(
-                      "assets/lotties/Login.json",
+                      "assets/lotties/Register.json",
                       height: AppSize.height * 0.2,
                       width: AppSize.width * 0.8,
                     ),
@@ -46,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "Login your Account ",
+                        "Create Your Student Account",
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -54,20 +59,22 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("OR", style: TextStyle(fontSize: 18)),
+                        Text(
+                          "Already have an account?",
+                          style: TextStyle(fontSize: 16),
+                        ),
 
                         TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, RouterString.register);
+                            Navigator.pushNamed(context, RouterString.login);
                           },
                           child: Text(
-                            "create a new account",
+                            "Log in here",
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 16,
                               color: AppColors.cadetBlue,
                             ),
                           ),
@@ -76,6 +83,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
 
                     SizedBox(height: AppSize.height * 0.04),
+                    CustomTextFormField(
+                      hintText: "User Name",
+                      controller: UserNameController,
+                      prefixIcon: const Icon(Icons.person),
+                      validator: (value) {
+                        return AppValidator.validateUserName(value);
+                      },
+                    ),
+
+                    SizedBox(height: AppSize.height * 0.01),
                     CustomTextFormField(
                       hintText: "Email",
                       controller: EmailController,
@@ -86,6 +103,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
 
                     SizedBox(height: AppSize.height * 0.01),
+
+                    CustomTextFormField(
+                      hintText: "Phone Number",
+                      controller: PhoneNumberController,
+                      prefixIcon: const Icon(Icons.phone_android),
+                      validator: (value) {
+                        return AppValidator.validatePhoneNumber(value);
+                      },
+                    ),
+                    SizedBox(height: AppSize.height * 0.01),
+
                     CustomTextFormField(
                       hintText: "Password",
                       obscureText: true,
@@ -96,37 +124,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
 
-                    // SizedBox(height: AppSize.height * 0.01),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(
-                            context,
-                            RouterString.forgetPassword,
-                          );
-                        },
-                        child: Text(
-                          "Forget Password ? ",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.cadetBlue,
-                          ),
-                        ),
-                      ),
+                    SizedBox(height: AppSize.height * 0.01),
+
+                    CustomTextFormField(
+                      hintText: "Confirm Password",
+                      obscureText: true,
+                      controller: PasswordController,
+                      prefixIcon: const Icon(Icons.password),
+                      validator: (value) {
+                        return AppValidator.validatePassword(value);
+                      },
                     ),
 
+                    SizedBox(height: AppSize.height * 0.04),
                     SizedBox(
                       height: AppSize.height * 0.06,
                       width: AppSize.width * 0.9,
                       child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushReplacementNamed(
-                            context,
-                            RouterString.register,
-                          );
-                        },
+                        onPressed: () {},
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.cadetBlue,
                           foregroundColor: Colors.white,
@@ -139,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         child: const Text(
-                          "Log in",
+                          "Register",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -155,5 +170,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+    ;
   }
 }

@@ -1,3 +1,6 @@
+import 'package:alefedu/presentation/screens/auth/forget_password_screen.dart';
+import 'package:alefedu/presentation/screens/auth/login_screen.dart';
+import 'package:alefedu/presentation/screens/auth/register_screen.dart';
 import 'package:alefedu/router/router.dart';
 import 'package:flutter/material.dart';
 
@@ -11,9 +14,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Alef Eduction',
       debugShowCheckedModeBanner: false,
       routes: routes,
+      // home: ForgetPasswordScreen(),
     );
   }
 }
